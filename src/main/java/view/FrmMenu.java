@@ -10,16 +10,16 @@ public class FrmMenu extends JFrame {
     private final RFLabel lblBoasVindas;
     private final RFButton btnLogin;
     private final RFButton btnCadastrar;
-    private JPanel pnlCabecalho;
-    private JPanel pnlCenter;
+    private final JPanel pnlCabecalho;
+    private final JPanel pnlCenter;
 
-    private Color darkred;
-    private Color verydarkgray;
+    private final Color darkred;
+    private final Color verydarkgray;
 
-    private GridBagConstraints gridBagConstraints;
-    private GridBagConstraints constraintsCabecalho;
-    private Insets cabecalhoInsets;
-    private Insets insets;
+    private final GridBagConstraints gridBagConstraints;
+    private final GridBagConstraints constraintsCabecalho;
+    private final Insets cabecalhoInsets;
+    private final Insets insets;
     public FrmMenu(){
         //sessão dos componentes
         gridBagConstraints = new GridBagConstraints();
@@ -53,7 +53,6 @@ public class FrmMenu extends JFrame {
         lblTitulo.setFont(quicksandAtt);
         pnlCabecalho.setBackground(darkred);
         pnlCabecalho.setPreferredSize(new Dimension(640,150));
-
         //fim da sessão
 
         //sessão da adição de componentes
@@ -77,6 +76,13 @@ public class FrmMenu extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 SwingUtilities.invokeLater(FrmLogin::new);
+            }
+        });
+        btnCadastrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                SwingUtilities.invokeLater(FrmCadastro::new);
             }
         });
         //fim da sessão

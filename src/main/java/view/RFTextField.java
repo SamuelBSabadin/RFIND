@@ -12,7 +12,7 @@ public class RFTextField extends JTextField{
         try{
             InputStream fontePrincipal = RFTextField.class.getResourceAsStream("/Fonts/Quicksand/static/Quicksand-Regular.ttf");
             quicksand = Font.createFont(Font.TRUETYPE_FONT,fontePrincipal);
-            quicksand = quicksand.deriveFont(Font.PLAIN,15);
+            quicksand = quicksand.deriveFont(Font.PLAIN,18);
         }
         catch(Exception e){
             System.out.println("Excessão na fonte: "+e.getMessage());

@@ -13,10 +13,8 @@ public class FrmLogin extends JFrame {
     private final JPanel pnlCenter;
     private final GridBagConstraints gridBagConstraints;
     private RFTextField txtCnpj;
-    private RFTextField txtNome;
     private RFPasswordField txtSenha;
     private final RFLabel lblCnpj;
-    private final RFLabel lblNome;
     private final RFLabel lblSenha;
     private final RFButton btnLogin;
     private final RFButton btnEsqueciMinhaSenha;
@@ -30,13 +28,11 @@ public class FrmLogin extends JFrame {
         pnlCabecalho = new JPanel();
         lblTitulo = new RFLabel("Iniciar sessão");
         lblCnpj = new RFLabel("CNPJ da empresa");
-        lblNome = new RFLabel("Nome da empresa");
         lblSenha = new RFLabel("Senha");
         pnlCenter = new JPanel();
         gridBagConstraints = new GridBagConstraints();
         cabecalhoConstraints = new GridBagConstraints();
         txtCnpj = new RFTextField();
-        txtNome = new RFTextField();
         txtSenha = new RFPasswordField();
         btnLogin = new RFButton("Iniciar sessão");
         btnEsqueciMinhaSenha = new RFButton("Esqueci minha senha?");
@@ -55,7 +51,6 @@ public class FrmLogin extends JFrame {
         setResizable(false);
         setLayout(new BorderLayout());
         pnlCenter.setBackground(verydarkgray);
-        setVisible(true);
         //fim da sessão
 
         //sessão da mudança de componentes
@@ -78,20 +73,14 @@ public class FrmLogin extends JFrame {
         pnlCenter.add(txtCnpj,gridBagConstraints);
         gridBagConstraints.gridy = 2;
         gridBagConstraints.insets = insetsMin;
-        pnlCenter.add(lblNome,gridBagConstraints);
+        pnlCenter.add(lblSenha,gridBagConstraints);
         gridBagConstraints.gridy = 3;
         gridBagConstraints.insets = insets;
-        pnlCenter.add(txtNome,gridBagConstraints);
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.insets = insetsMin;
-        pnlCenter.add(lblSenha,gridBagConstraints);
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.insets = insets;
         pnlCenter.add(txtSenha,gridBagConstraints);
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.insets = new Insets(5,0,15,0);
         pnlCenter.add(btnLogin,gridBagConstraints);
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 5;
         pnlCenter.add(btnEsqueciMinhaSenha,gridBagConstraints);
 
         add(pnlCabecalho,BorderLayout.NORTH);
@@ -107,5 +96,7 @@ public class FrmLogin extends JFrame {
             }
         });
         //fim da sessão
+
+        setVisible(true);
     }
 }

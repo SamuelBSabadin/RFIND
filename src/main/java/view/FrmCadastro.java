@@ -38,8 +38,8 @@ public class FrmCadastro extends JFrame {
         empresaControl = new EmpresaControl();
 
         //sessão dos componentes
-        darkred = Color.decode("#9b1b30");
-        verydarkgray = Color.decode("#20232a");
+        darkred = new Color(155,27,48);//Color.decode("#9b1b30");
+        verydarkgray = new Color(32,35,42);//Color.decode("#20232a");
         pnlCabecalho = new JPanel();
         pnlConteudo = new JPanel();
         lblTitulo = new RFLabel("Cadastrar-se");
@@ -138,16 +138,16 @@ public class FrmCadastro extends JFrame {
                         txtNome.setText(null);
                         txtSenha.setText(null);
                         txtConfirmarSenha.setText(null);
-                        JOptionPane.showMessageDialog(null,"Sua empresa foi cadastrada com sucesso!");
+                        RFMessageDialog.showMessageDialog(null,"Cadastro concluído com êxito!","Sucesso");
                         dispose();
                         SwingUtilities.invokeLater(FrmBoasVindas::new);
                     }
                     else{
-                        JOptionPane.showMessageDialog(null,"Senhas não são iguais!");
+                        RFMessageDialog.showMessageDialog(null,"Senhas não são iguais!","Erro ao cadastrar");
                     }
                 }
                 catch(Exception ex){
-                    JOptionPane.showMessageDialog(null,"Erro ao cadastrar a empresa!");
+                    RFMessageDialog.showMessageDialog(null,"Preencha todos os campos corretamente!","Erro ao cadastrar");
                 }
             }
         });

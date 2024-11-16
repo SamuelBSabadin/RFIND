@@ -31,12 +31,20 @@ public class EmpresaControl {
         entityManager.close();
         return listEmpresas;
     }
+    public Empresa findByCnpj(String cnpj){
+        if(!entityManager.isOpen())
+            entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        Empresa empresa = entityManager.createQuery("select e from Empresa e where e.cnpj like :cnpj",Empresa.class).setParameter("cnpj",cnpj).getSingleResult();
+        entityManager.close();
+        return empresa;
+    }
     public void deleteById(int id)
     {
         if(!entityManager.isOpen())
             entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
-        entityManager.createQuery("delete e from Empresa e where e.id = :id").setParameter("id",id).executeUpdate();
+        entityManager.createQuery("delete from Empresa e where e.id = :id").setParameter("id",id).executeUpdate();
         entityManager.close();
     }
 }

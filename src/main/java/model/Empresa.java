@@ -3,6 +3,8 @@ package model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table
 public class Empresa {
@@ -15,6 +17,8 @@ public class Empresa {
     private String nome;
     @Column(length = 30)
     private String senha;
+    @OneToMany(mappedBy = "empresa")
+    private List<Funcionario> funcionarios;
 
     public Empresa(){}
 
@@ -61,5 +65,13 @@ public class Empresa {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public List<Funcionario> getFuncionarios(){
+        return funcionarios;
+    }
+
+    public void setFuncionarios(List<Funcionario> funcionarios){
+        this.funcionarios = funcionarios;
     }
 }

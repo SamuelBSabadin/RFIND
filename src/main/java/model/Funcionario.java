@@ -19,13 +19,13 @@ public class Funcionario
     private String setor;
     @Column(nullable = false)
     private boolean ativado;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "empresa_id", nullable = false)
     private Empresa empresa;
 
     public Funcionario(){}
 
-    public Funcionario(String cpf,String nome,String sobrenome,String setor,boolean ativado)
+    public Funcionario(String cpf,String nome,String sobrenome,String setor, Empresa empresa)
     {
         if(cpf.length()<11)
             throw new IllegalArgumentException();
@@ -34,6 +34,7 @@ public class Funcionario
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.setor = setor;
+        this.empresa = empresa;
         this.ativado = true;
     }
 

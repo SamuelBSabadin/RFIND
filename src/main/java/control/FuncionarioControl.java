@@ -17,6 +17,13 @@ public class FuncionarioControl {
         if(!entityManager.isOpen())
             entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
+        //código do gpt
+        Empresa empresa = funcionario.getEmpresa();
+        if (empresa != null && !entityManager.contains(empresa)) {
+            empresa = entityManager.merge(empresa);
+            funcionario.setEmpresa(empresa);
+        }
+        //fim
         entityManager.persist(funcionario);
         entityManager.getTransaction().commit();
         entityManager.close();
@@ -25,7 +32,8 @@ public class FuncionarioControl {
         if(!entityManager.isOpen())
             entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
-        entityManager.createQuery("delete f from Funcionario f where f.id = :id", Funcionario.class).setParameter(id,"id").executeUpdate();
+        Funcionario funcionario = entityManager.find(Funcionario.class,id);
+        entityManager.remove(funcionario);
         entityManager.getTransaction().commit();//se algo falhar, comentar essa linha
         entityManager.close();
     }

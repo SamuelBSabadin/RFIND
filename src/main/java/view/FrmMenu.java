@@ -151,11 +151,14 @@ public class FrmMenu extends JFrame {
                 setCursor(Cursor.getDefaultCursor());
             }
         });
+        btnCadastrarFunc.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                SwingUtilities.invokeLater(FrmCadastroFuncionario::new);
+            }
+        });
         //fim da sessão
 
         setVisible(true);
-    }
-    public static void main(String[] args){
-        SwingUtilities.invokeLater(FrmMenu::new);
     }
 }

@@ -2,6 +2,7 @@ package view;
 
 import control.EmpresaControl;
 import model.Empresa;
+import model.Sessao;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +13,8 @@ import java.awt.event.WindowEvent;
 
 public class FrmLogin extends JFrame {
     private EmpresaControl empresaControl;
+
+    private ImageIcon iconError;
 
     private final JPanel pnlCabecalho;
     private final RFLabel lblTitulo;
@@ -33,6 +36,8 @@ public class FrmLogin extends JFrame {
         empresaControl = new EmpresaControl();
 
         //sessão dos componentes
+        iconError = new ImageIcon(getClass().getResource("/Images/Error.png"));
+
         pnlCabecalho = new JPanel();
         lblTitulo = new RFLabel("Iniciar sessão");
         lblCnpj = new RFLabel("CNPJ da empresa");
@@ -115,16 +120,18 @@ public class FrmLogin extends JFrame {
                         }
                     }
                     if (!empresaExiste) {
-                        JOptionPane.showMessageDialog(null, "Preencha todos os campos corretamente!");
+                        RFMessageDialog.showMessageDialog(null,"Preencha todos os campos corretamente!","Erro ao iniciar sessão");
                         txtCnpj.setText(null);
                         txtSenha.setText(null);
                     } else {
+                        Empresa empresa = empresaControl.findByCnpj(txtCnpj.getText());
+                        Sessao.setSessao(empresa.getId(),empresa.getCnpj(),empresa.getNome(),empresa.getSenha());
                         dispose();
                         SwingUtilities.invokeLater(FrmMenu::new);
                     }
                 }
                 catch(Exception ex){
-                    JOptionPane.showMessageDialog(null, "Preencha todos os campos corretamente!");
+                    RFMessageDialog.showMessageDialog(null, "Preencha todos os campos corretamente!","Erro ao iniciar sessão");
                 }
             }
         });

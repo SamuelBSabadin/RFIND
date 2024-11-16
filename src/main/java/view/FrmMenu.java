@@ -4,85 +4,151 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class FrmMenu extends JFrame {
-    private final RFLabel lblTitulo;
-    private final RFLabel lblBoasVindas;
-    private final RFButton btnLogin;
-    private final RFButton btnCadastrar;
-    private final JPanel pnlCabecalho;
-    private final JPanel pnlCenter;
+    private ImageIcon iconTable;
+    private ImageIcon iconAddFunc;
+    private ImageIcon iconConfig;
+
+    private JButton btnConsultar;
+    private JButton btnCadastrarFunc;
+    private JButton btnConfig;
+    //private JButton btnExit;
+
+    private JPanel pnlAddFunc;
+    private JPanel pnlConsultar;
+    private JPanel pnlConfig;
 
     private final Color darkred;
     private final Color verydarkgray;
-
-    private final GridBagConstraints gridBagConstraints;
-    private final GridBagConstraints constraintsCabecalho;
-    private final Insets cabecalhoInsets;
+    private final JPanel pnlCabecalho;
+    private final JPanel pnlCabecalhoEsquerda;
+    private final JPanel pnlCabecalhoDireita;
+    private final JPanel pnlCenter;
+    private final Insets insetsCabecalho;
     private final Insets insets;
+    private final RFLabel lblTitulo;
+    private final GridBagConstraints constraintsCabecalho;
+    private final GridBagConstraints gridBagConstraints;
     public FrmMenu(){
         //sessão dos componentes
-        gridBagConstraints = new GridBagConstraints();
+        darkred = Color.decode("#9b1b30");//155,27,48
+        verydarkgray = Color.decode("#20232a");//32,35,42
+        pnlCabecalho = new JPanel(new GridLayout(1,2));
+        pnlCabecalhoEsquerda = new JPanel(new GridBagLayout());
+        pnlCabecalhoDireita = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        pnlCenter = new JPanel(new GridBagLayout());
+        insetsCabecalho = new Insets(90,10,90,10);
+        insets = new Insets(360,60,360,60);
+        lblTitulo = new RFLabel("Menu Principal");
         constraintsCabecalho = new GridBagConstraints();
-        cabecalhoInsets = new Insets(75,0,75,0);
-        insets = new Insets(25,0,25,0);
-        lblTitulo = new RFLabel("RFIND");
-        lblBoasVindas = new RFLabel("Seja bem-vindo! O que deseja fazer?");
-        btnLogin = new RFButton("Iniciar sessão");
-        btnCadastrar = new RFButton("Cadastrar-se");
-        pnlCabecalho = new JPanel();
-        pnlCenter = new JPanel();
-        darkred = Color.decode("#9b1b30");
-        verydarkgray = Color.decode("#20232a");
+        gridBagConstraints = new GridBagConstraints();
+        //contentPane = new JPanel();
+
+        iconAddFunc = new ImageIcon(getClass().getResource("/Images/addIcon.png"));
+        btnCadastrarFunc = new JButton(iconAddFunc);
+        iconConfig = new ImageIcon(getClass().getResource("/Images/gear.png"));
+        btnConfig = new JButton(iconConfig);
+        iconTable = new ImageIcon(getClass().getResource("/Images/Table.png"));
+        btnConsultar = new JButton(iconTable);
+        pnlConfig = new JPanel(new GridLayout(2,1));
+        pnlAddFunc = new JPanel(new GridLayout(2,1));
+        pnlConsultar = new JPanel(new GridLayout(2,1));
+        //fim da sessão
+
+        //sessão da mudança de componentes
+        pnlCabecalhoEsquerda.setBackground(darkred);
+        pnlCabecalhoDireita.setBackground(darkred);
+        pnlCabecalho.setPreferredSize(new Dimension(1280,180));
+        pnlCenter.setBackground(verydarkgray);
+        Font quicksandatt = lblTitulo.getFont().deriveFont(Font.PLAIN,72);
+        lblTitulo.setFont(quicksandatt);
+        pnlConfig.setBackground(verydarkgray);
+        pnlConsultar.setBackground(verydarkgray);
+        pnlAddFunc.setBackground(verydarkgray);
+        btnConfig.setContentAreaFilled(false);
+        btnConfig.setBorderPainted(false);
+        btnConfig.setOpaque(false);
+        btnConfig.setFocusPainted(false);
+        btnCadastrarFunc.setContentAreaFilled(false);
+        btnCadastrarFunc.setBorderPainted(false);
+        btnCadastrarFunc.setFocusPainted(false);
+        btnCadastrarFunc.setOpaque(false);
+        btnConsultar.setContentAreaFilled(false);
+        btnConsultar.setBorderPainted(false);
+        btnConsultar.setOpaque(false);
+        btnConsultar.setFocusPainted(false);
         //fim da sessão
 
         //sessão dos setters
-        setSize(480,640);//720,840
-        setTitle("RFIND - Seja bem-vindo!");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(1280,720);
+        setTitle("RFIND - Menu principal");
         setLocationRelativeTo(null);
-        setResizable(false);
         setLayout(new BorderLayout());
-        pnlCabecalho.setLayout(new GridBagLayout());
-        pnlCenter.setBackground(verydarkgray);
-        pnlCenter.setLayout(new GridBagLayout());
-        //fim da sessão
-
-        //sessão da modificação de componentes
-        Font quicksandAtt = lblTitulo.getFont().deriveFont(Font.PLAIN,64);//24
-        lblTitulo.setFont(quicksandAtt);
-        pnlCabecalho.setBackground(darkred);
-        pnlCabecalho.setPreferredSize(new Dimension(640,150));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //fim da sessão
 
         //sessão da adição de componentes
-        constraintsCabecalho.insets = cabecalhoInsets;
+        constraintsCabecalho.insets = insetsCabecalho;
+        pnlCabecalhoEsquerda.add(lblTitulo,constraintsCabecalho);
+
+        pnlAddFunc.add(btnCadastrarFunc);
+        pnlAddFunc.add(new RFLabel("Cadastrar funcionário"));
+
+        pnlConsultar.add(btnConsultar);
+        pnlConsultar.add(new RFLabel("Consultar funcionários"));
+
+        pnlConfig.add(btnConfig);
+        pnlConfig.add(new RFLabel("Configurações"));
+
         gridBagConstraints.insets = insets;
+        pnlCenter.add(pnlAddFunc,gridBagConstraints);
+        gridBagConstraints.gridx = 1;
+        pnlCenter.add(pnlConsultar,gridBagConstraints);
+        gridBagConstraints.gridx = 2;
+        pnlCenter.add(pnlConfig,gridBagConstraints);
 
-        pnlCabecalho.add(lblTitulo);
-        pnlCenter.add(lblBoasVindas,gridBagConstraints);
-        gridBagConstraints.gridy = 1;
-        pnlCenter.add(btnLogin,gridBagConstraints);
-        gridBagConstraints.gridy = 2;
-        pnlCenter.add(btnCadastrar,gridBagConstraints);
+        pnlCabecalho.add(pnlCabecalhoEsquerda);
+        pnlCabecalho.add(pnlCabecalhoDireita);
 
-        add(pnlCabecalho,BorderLayout.NORTH);
+        add(pnlCabecalho, BorderLayout.NORTH);
         add(pnlCenter,BorderLayout.CENTER);
         //fim da sessão
 
         //sessão dos listeners
-        btnLogin.addActionListener(new ActionListener() {
+        btnConsultar.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                SwingUtilities.invokeLater(FrmLogin::new);
+            public void mouseEntered(MouseEvent e) {
+                setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(Cursor.getDefaultCursor());
             }
         });
-        btnCadastrar.addActionListener(new ActionListener() {
+        btnCadastrarFunc.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                SwingUtilities.invokeLater(FrmCadastro::new);
+            public void mouseEntered(MouseEvent e) {
+                setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(Cursor.getDefaultCursor());
+            }
+        });
+        btnConfig.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(Cursor.getDefaultCursor());
             }
         });
         //fim da sessão

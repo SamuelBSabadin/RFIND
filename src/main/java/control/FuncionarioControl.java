@@ -39,13 +39,4 @@ public class FuncionarioControl {
         entityManager.close();
         return listaTodos;
     }
-    /*public List<Funcionario> selectWhereEmpresaId(Empresa empresa){
-        if(!entityManager.isOpen())
-            entityManager = entityManagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
-        List<Funcionario> listaTodosNumaEmpresa = entityManager.createQuery("select f from Funcionario f where f.empresa = :empresa", Funcionario.class).setParameter("empresa",empresa).getResultList();
-        entityManager.getTransaction().commit();//se algo falhar, comentar essa linha
-        entityManager.close();
-        return listaTodosNumaEmpresa;
-    }*/
 }

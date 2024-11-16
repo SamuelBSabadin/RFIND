@@ -1,11 +1,18 @@
 package view;
 
+import control.EmpresaControl;
+import model.Empresa;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class FrmCadastro extends JFrame {
+    private EmpresaControl empresaControl;
+
     private final Color darkred;
     private final Color verydarkgray;
     private final JPanel pnlCabecalho;
@@ -28,6 +35,8 @@ public class FrmCadastro extends JFrame {
     private JScrollPane pnlScroll;
     private final JScrollBar scrollBar;
     public FrmCadastro(){
+        empresaControl = new EmpresaControl();
+
         //sessão dos componentes
         darkred = Color.decode("#9b1b30");
         verydarkgray = Color.decode("#20232a");
@@ -115,7 +124,31 @@ public class FrmCadastro extends JFrame {
             @Override
             public void windowClosing(WindowEvent e){
                 dispose();
-                SwingUtilities.invokeLater(FrmMenu::new);
+                SwingUtilities.invokeLater(FrmBoasVindas::new);
+            }
+        });
+        btnCadastrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    if(String.valueOf(txtConfirmarSenha.getPassword()).equals(String.valueOf(txtSenha.getPassword()))){
+                        Empresa empresa = new Empresa(txtCnpj.getText(), txtNome.getText(), String.valueOf(txtSenha.getPassword()));
+                        empresaControl.insert(empresa);
+                        txtCnpj.setText(null);
+                        txtNome.setText(null);
+                        txtSenha.setText(null);
+                        txtConfirmarSenha.setText(null);
+                        JOptionPane.showMessageDialog(null,"Sua empresa foi cadastrada com sucesso!");
+                        dispose();
+                        SwingUtilities.invokeLater(FrmBoasVindas::new);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null,"Senhas não são iguais!");
+                    }
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(null,"Erro ao cadastrar a empresa!");
+                }
             }
         });
         //fim da sessão

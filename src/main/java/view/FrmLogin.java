@@ -1,12 +1,18 @@
 package view;
 
+import control.EmpresaControl;
+import model.Empresa;
+
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class FrmLogin extends JFrame {
+    private EmpresaControl empresaControl;
+
     private final JPanel pnlCabecalho;
     private final RFLabel lblTitulo;
     private final GridBagConstraints cabecalhoConstraints;
@@ -24,6 +30,8 @@ public class FrmLogin extends JFrame {
     private final Color darkred;
     private final Color verydarkgray;
     public FrmLogin() {
+        empresaControl = new EmpresaControl();
+
         //sessão dos componentes
         pnlCabecalho = new JPanel();
         lblTitulo = new RFLabel("Iniciar sessão");
@@ -92,7 +100,32 @@ public class FrmLogin extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 dispose();
-                SwingUtilities.invokeLater(FrmMenu::new);
+                SwingUtilities.invokeLater(FrmBoasVindas::new);
+            }
+        });
+        btnLogin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean empresaExiste = false;
+                try{
+                    for (Empresa empresa : empresaControl.select()) {
+                        if (empresa.getCnpj().equals(txtCnpj.getText()) && empresa.getSenha().equals(String.valueOf(txtSenha.getPassword()))) {
+                            empresaExiste = true;
+                            break;
+                        }
+                    }
+                    if (!empresaExiste) {
+                        JOptionPane.showMessageDialog(null, "Preencha todos os campos corretamente!");
+                        txtCnpj.setText(null);
+                        txtSenha.setText(null);
+                    } else {
+                        dispose();
+                        SwingUtilities.invokeLater(FrmMenu::new);
+                    }
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, "Preencha todos os campos corretamente!");
+                }
             }
         });
         //fim da sessão

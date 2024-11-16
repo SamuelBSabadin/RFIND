@@ -4,7 +4,7 @@ package model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Empresa")
+@Table
 public class Empresa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

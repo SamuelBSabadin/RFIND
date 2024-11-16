@@ -3,7 +3,7 @@ package model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Funcionario")
+@Table
 public class Funcionario
 {
     @Id
@@ -17,13 +17,15 @@ public class Funcionario
     private String sobrenome;
     @Column(nullable = false)
     private String setor;
+    @Column(nullable = false)
+    private boolean ativado;
     @ManyToOne
     @JoinColumn(name = "empresa_id", nullable = false)
     private Empresa empresa;
 
     public Funcionario(){}
 
-    public Funcionario(String cpf,String nome,String sobrenome,String setor)
+    public Funcionario(String cpf,String nome,String sobrenome,String setor,boolean ativado)
     {
         if(cpf.length()<11)
             throw new IllegalArgumentException();
@@ -32,6 +34,7 @@ public class Funcionario
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.setor = setor;
+        this.ativado = true;
     }
 
     public int getId() {
@@ -80,5 +83,13 @@ public class Funcionario
 
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
+    }
+
+    public void setAtivado(boolean ativado){
+        this.ativado = ativado;
+    }
+
+    public boolean getAtivado(){
+        return ativado;
     }
 }

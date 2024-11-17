@@ -12,9 +12,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.InputStream;
 import java.util.List;
 
 public class FrmAtualizacao extends JFrame {
+    private InputStream fonteLexendExa;
+    private Font lexendExa;
+
     private Color verydarkgray;
     private Color darkred;
 
@@ -53,6 +57,15 @@ public class FrmAtualizacao extends JFrame {
 
     private Sessao sessao;
     public FrmAtualizacao(){
+        try{
+            fonteLexendExa = FrmBoasVindas.class.getResourceAsStream("/Fonts/Lexend_Exa/static/LexendExa-Regular.ttf");
+            lexendExa = Font.createFont(Font.TRUETYPE_FONT, fonteLexendExa);
+            lexendExa = lexendExa.deriveFont(Font.PLAIN, 24);
+        }
+        catch(Exception e){
+
+        }
+
         funcionarioControl = new FuncionarioControl();
         empresaControl = new EmpresaControl();
         sessao = relembrarSessao();
@@ -62,7 +75,7 @@ public class FrmAtualizacao extends JFrame {
         verydarkgray = new Color(32,35,42);
         darkred = new Color(155,27,48);
 
-        lblTitulo = new RFLabel("Atualizar Funcionário");
+        lblTitulo = new RFLabel("ATUALIZAR FUNCIONÁRIO");
         lblId = new RFLabel("ID do funcionário");
         lblCpf = new RFLabel("CPF do funcionário");
         lblNome = new RFLabel("Nome do funcionário");
@@ -92,8 +105,8 @@ public class FrmAtualizacao extends JFrame {
         //fim da sessão
 
         //sessão da mudança de componentes
-        quicksandatt = lblTitulo.getFont().deriveFont(Font.PLAIN,40);
-        lblTitulo.setFont(quicksandatt);
+        //quicksandatt = lblTitulo.getFont().deriveFont(Font.PLAIN,40);
+        lblTitulo.setFont(lexendExa);
 
         pnlCabecalho.setPreferredSize(new Dimension(640,150));
         pnlCabecalho.setBackground(darkred);
@@ -124,31 +137,31 @@ public class FrmAtualizacao extends JFrame {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.insets = insets;
         pnlConteudo.add(txtId,gridBagConstraints);
-        gridBagConstraints.gridy = 2;
+        /*gridBagConstraints.gridy = 2;
         gridBagConstraints.insets = insetsMin;
         pnlConteudo.add(lblCpf,gridBagConstraints);
         gridBagConstraints.gridy = 3;
         gridBagConstraints.insets = insets;
-        pnlConteudo.add(txtCpf,gridBagConstraints);
-        gridBagConstraints.gridy = 4;
+        pnlConteudo.add(txtCpf,gridBagConstraints);*/
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.insets = insetsMin;
         pnlConteudo.add(lblNome,gridBagConstraints);
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.insets = insets;
         pnlConteudo.add(txtNome,gridBagConstraints);
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.insets = insetsMin;
         pnlConteudo.add(lblSobrenome,gridBagConstraints);
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.insets = insets;
         pnlConteudo.add(txtSobrenome,gridBagConstraints);
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.insets = insetsMin;
         pnlConteudo.add(lblSetor,gridBagConstraints);
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.insets = insets;
         pnlConteudo.add(txtSetor,gridBagConstraints);
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 8;
         pnlConteudo.add(btnAtualizar,gridBagConstraints);
 
         pnlCenter.setViewportView(pnlConteudo);
@@ -172,7 +185,7 @@ public class FrmAtualizacao extends JFrame {
                     Empresa empresa = empresaControl.findByCnpj(sessao.getCnpj());
                     //Funcionario funcionario = new Funcionario(txtCpf.getText(),txtNome.getText(),txtSobrenome.getText(),txtSetor.getText(),empresa);
                     //funcionarioControl.insert(funcionario);
-                    funcionarioControl.update(Integer.parseInt(txtId.getText()),txtCpf.getText(),txtNome.getText(),txtSobrenome.getText(),txtSetor.getText());
+                    funcionarioControl.update(Integer.parseInt(txtId.getText())/*,txtCpf.getText()*/,txtNome.getText(),txtSobrenome.getText(),txtSetor.getText());
                     RFMessageDialog.showMessageDialog(null,"Funcionário atualizado com sucesso!","Aviso do sistema");
                     txtCpf.setText(null);
                     txtNome.setText(null);

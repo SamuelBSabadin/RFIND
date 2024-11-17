@@ -9,8 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.InputStream;
 
 public class FrmCadastro extends JFrame {
+    private InputStream fonteLexendExa;
+    private Font lexendExa;
+
     private EmpresaControl empresaControl;
 
     private final Color darkred;
@@ -35,6 +39,15 @@ public class FrmCadastro extends JFrame {
     private JScrollPane pnlScroll;
     private final JScrollBar scrollBar;
     public FrmCadastro(){
+        try{
+            fonteLexendExa = FrmBoasVindas.class.getResourceAsStream("/Fonts/Lexend_Exa/static/LexendExa-Regular.ttf");
+            lexendExa = Font.createFont(Font.TRUETYPE_FONT, fonteLexendExa);
+            lexendExa = lexendExa.deriveFont(Font.PLAIN, 48);
+        }
+        catch(Exception e){
+
+        }
+
         empresaControl = new EmpresaControl();
 
         //sessão dos componentes
@@ -42,7 +55,7 @@ public class FrmCadastro extends JFrame {
         verydarkgray = new Color(32,35,42);//Color.decode("#20232a");
         pnlCabecalho = new JPanel();
         pnlConteudo = new JPanel();
-        lblTitulo = new RFLabel("Cadastrar-se");
+        lblTitulo = new RFLabel("CADASTRAR-SE");
         insetsCabecalho = new Insets(75,0,75,0);
         insets = new Insets(10,0,25,0);
         insetsMin = new Insets(5,0,10,0);
@@ -76,9 +89,8 @@ public class FrmCadastro extends JFrame {
         pnlCabecalho.setBackground(darkred);
         pnlCabecalho.setPreferredSize(new Dimension(640,150));
         pnlCabecalho.setLayout(new GridBagLayout());
-        Font quicksandatt = lblTitulo.getFont().deriveFont(Font.PLAIN,64);
         pnlConteudo.setLayout(new GridBagLayout());
-        lblTitulo.setFont(quicksandatt);
+        lblTitulo.setFont(lexendExa);
         scrollBar.setUnitIncrement(8);
         scrollBar.setBlockIncrement(50);
         //fim da sessão

@@ -12,10 +12,14 @@ import model.Sessao;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FrmGerenciamento extends JFrame {
+    private InputStream fonteLexendExa;
+    private Font lexendExa;
+
     private JFrame frmPromptDesativar;
     private JFrame frmPromptPesquisa;
 
@@ -52,14 +56,20 @@ public class FrmGerenciamento extends JFrame {
 
     private RFLabel lblTitulo;
 
-    //private JMenuBar menuBar = new JMenuBar();
-    //private JMenu menu = new JMenu("Funcionário");
-    //private JMenuItem menuItem = new JMenuItem("Desativados");
     private RFMenuBar menuBar;
     private RFMenu menu;
     private RFMenuItem menuItem;
 
     public FrmGerenciamento(){
+        try{
+            fonteLexendExa = FrmBoasVindas.class.getResourceAsStream("/Fonts/Lexend_Exa/static/LexendExa-Regular.ttf");
+            lexendExa = Font.createFont(Font.TRUETYPE_FONT, fonteLexendExa);
+            lexendExa = lexendExa.deriveFont(Font.PLAIN, 36);
+        }
+        catch(Exception e){
+
+        }
+
         empresaControl = new EmpresaControl();
         funcionarioControl = new FuncionarioControl();
 
@@ -88,7 +98,7 @@ public class FrmGerenciamento extends JFrame {
         btnPesquisar2 = new RFButton("Pesquisar");
         btnDesativar = new RFButton("Desativar");
 
-        lblTitulo = new RFLabel("Gerenciamento de funcionários");
+        lblTitulo = new RFLabel("GERENCIAMENTO DE FUNCIONÁRIOS");
 
         insetsCabecalho = new Insets(75,0,75,0);
         insetsRodape = new Insets(50,20,50,20);
@@ -109,8 +119,8 @@ public class FrmGerenciamento extends JFrame {
         pnlRodape.setLayout(new GridBagLayout());
         pnlRodape.setPreferredSize(new Dimension(1280,100));
 
-        Font quicksandatt = lblTitulo.getFont().deriveFont(Font.PLAIN,56);
-        lblTitulo.setFont(quicksandatt);
+        //Font quicksandatt = lblTitulo.getFont().deriveFont(Font.PLAIN,56);
+        lblTitulo.setFont(lexendExa);
         //fim da sessão
 
         //sessão dos setters
@@ -245,7 +255,11 @@ public class FrmGerenciamento extends JFrame {
                 Empresa empresa = empresaControl.findByCnpj(relembraSessao().getCnpj());
                 strPesquisa = txtPesquisa.getText();
                 txtPesquisa.setText(null);
-                atualizaTabela(strPesquisa);
+                if(strPesquisa.isEmpty())
+                    atualizaTabelaDesativar();
+                else
+                    atualizaTabela(strPesquisa);
+
                 frmPromptPesquisa.dispose();
             }
         });

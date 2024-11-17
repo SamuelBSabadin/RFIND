@@ -33,18 +33,18 @@ public class FuncionarioDAO {
         entityManager.close();
     }
 
-    public void update(int id, String cpf, String nome, String sobrenome, String setor){
+    public void update(int id/*,String cpf*/, String nome, String sobrenome, String setor){
         if(!entityManager.isOpen())
             entityManager = entityManagerFactory.createEntityManager();
         if(!entityManager.getTransaction().isActive())
             entityManager.getTransaction().begin();
         Funcionario funcionario = entityManager.find(Funcionario.class,id);
-        if(cpf == null||cpf.isEmpty()){
+        /*if(cpf == null||cpf.isEmpty()){
             funcionario.setCpf(funcionario.getCpf());
         }
         else{
             funcionario.setCpf(cpf);
-        }
+        }*/
         if(nome == null||nome.isEmpty()){
             funcionario.setNome(funcionario.getNome());
         }
@@ -77,7 +77,7 @@ public class FuncionarioDAO {
         Funcionario funcionario = entityManager.find(Funcionario.class,id);
         if(funcionario == null)
             throw new NullPointerException();
-        else if(!funcionario.getAtivado()){
+        if(!funcionario.getAtivado()){
             funcionario = entityManager.merge(funcionario);//garante que o usuário está persistido
             entityManager.remove(funcionario);
         }
@@ -126,7 +126,13 @@ public class FuncionarioDAO {
             if(!entityManager.getTransaction().isActive())
                 entityManager.getTransaction().begin();
             Funcionario funcionario = entityManager.find(Funcionario.class,id);
-            entityManager.remove(funcionario);
+            if(!funcionario.getAtivado()){
+                funcionario = entityManager.merge(funcionario);
+                entityManager.remove(funcionario);
+            }
+            else{
+                throw new IllegalArgumentException();
+            }
             entityManager.getTransaction().commit();
             entityManager.close();
         }

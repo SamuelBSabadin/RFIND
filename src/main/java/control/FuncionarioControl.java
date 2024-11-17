@@ -14,8 +14,8 @@ public class FuncionarioControl {
     public void insert(Funcionario funcionario){
         funcionarioDAO.insert(funcionario);
     }
-    public void update(int id, String cpf, String nome, String sobrenome, String setor){
-        funcionarioDAO.update(id,cpf,nome,sobrenome,setor);
+    public void update(int id/*, String cpf*/, String nome, String sobrenome, String setor){
+        funcionarioDAO.update(id/*,cpf*/,nome,sobrenome,setor);
     }
     public void deleteById(int id){
         funcionarioDAO.deleteById(id);

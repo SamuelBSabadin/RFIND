@@ -13,10 +13,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FrmDesativados extends JFrame {
+    private InputStream fonteLexendExa;
+    private Font lexendExa;
+
     private EmpresaControl empresaControl;
     private FuncionarioControl funcionarioControl;
 
@@ -51,6 +55,15 @@ public class FrmDesativados extends JFrame {
     private JFrame frmPromptAtivar;
 
     public FrmDesativados(){
+        try{
+            fonteLexendExa = FrmBoasVindas.class.getResourceAsStream("/Fonts/Lexend_Exa/static/LexendExa-Regular.ttf");
+            lexendExa = Font.createFont(Font.TRUETYPE_FONT, fonteLexendExa);
+            lexendExa = lexendExa.deriveFont(Font.PLAIN, 48);
+        }
+        catch(Exception e){
+
+        }
+
         empresaControl = new EmpresaControl();
         funcionarioControl = new FuncionarioControl();
 
@@ -63,7 +76,7 @@ public class FrmDesativados extends JFrame {
         pnlCenter = new JScrollPane();
         pnlRodape = new JPanel();
 
-        lblTitulo = new RFLabel("Funcionários desativados");
+        lblTitulo = new RFLabel("FUNCIONÁRIOS DESATIVADOS");
 
         tblFuncDes = new RFTable();
         dados = new DefaultTableModel();
@@ -90,8 +103,8 @@ public class FrmDesativados extends JFrame {
         pnlRodape.setPreferredSize(new Dimension(960,100));
         pnlCenter.getViewport().setBackground(verydarkgray);
 
-        Font quicksandatt = lblTitulo.getFont().deriveFont(Font.PLAIN,56);
-        lblTitulo.setFont(quicksandatt);
+        //Font quicksandatt = lblTitulo.getFont().deriveFont(Font.PLAIN,56);
+        lblTitulo.setFont(lexendExa);
 
         constraints = new GridBagConstraints();
         gridBagConstraints = new GridBagConstraints();

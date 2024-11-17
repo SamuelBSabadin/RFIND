@@ -10,9 +10,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.InputStream;
 
 public class FrmLogin extends JFrame {
     private EmpresaControl empresaControl;
+
+    private InputStream fonteLexendExa;
+    private Font lexendExa;
 
     private ImageIcon iconError;
 
@@ -35,11 +39,20 @@ public class FrmLogin extends JFrame {
     public FrmLogin() {
         empresaControl = new EmpresaControl();
 
+        try{
+            fonteLexendExa = FrmBoasVindas.class.getResourceAsStream("/Fonts/Lexend_Exa/static/LexendExa-Regular.ttf");
+            lexendExa = Font.createFont(Font.TRUETYPE_FONT, fonteLexendExa);
+            lexendExa = lexendExa.deriveFont(Font.PLAIN, 42);
+        }
+        catch(Exception e){
+
+        }
+
         //sessão dos componentes
         iconError = new ImageIcon(getClass().getResource("/Images/Error.png"));
 
         pnlCabecalho = new JPanel();
-        lblTitulo = new RFLabel("Iniciar sessão");
+        lblTitulo = new RFLabel("INICIAR SESSÃO");
         lblCnpj = new RFLabel("CNPJ da empresa");
         lblSenha = new RFLabel("Senha");
         pnlCenter = new JPanel();
@@ -67,8 +80,8 @@ public class FrmLogin extends JFrame {
         //fim da sessão
 
         //sessão da mudança de componentes
-        Font quicksandatt = lblTitulo.getFont().deriveFont(Font.PLAIN,64);
-        lblTitulo.setFont(quicksandatt);
+        //Font quicksandatt = lblTitulo.getFont().deriveFont(Font.PLAIN,64);
+        lblTitulo.setFont(lexendExa);
         pnlCabecalho.setPreferredSize(new Dimension(720,150));
         pnlCabecalho.setBackground(darkred);
         pnlCabecalho.setLayout(new GridBagLayout());

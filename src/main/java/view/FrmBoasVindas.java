@@ -3,8 +3,12 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.InputStream;
 
 public class FrmBoasVindas extends JFrame {
+    private InputStream fonteLexendExa;
+    private Font lexendExa;
+
     private final RFLabel lblTitulo;
     private final RFLabel lblBoasVindas;
     private final RFButton btnLogin;
@@ -21,6 +25,16 @@ public class FrmBoasVindas extends JFrame {
     private final Insets cabecalhoInsets;
     private final Insets insets;
     public FrmBoasVindas(){
+
+        try{
+            fonteLexendExa = FrmBoasVindas.class.getResourceAsStream("/Fonts/Lexend_Exa/static/LexendExa-Regular.ttf");
+            lexendExa = Font.createFont(Font.TRUETYPE_FONT, fonteLexendExa);
+            lexendExa = lexendExa.deriveFont(Font.PLAIN, 72);
+        }
+        catch(Exception e){
+
+        }
+
         //sessão dos componentes
         gridBagConstraints = new GridBagConstraints();
         constraintsCabecalho = new GridBagConstraints();
@@ -32,8 +46,8 @@ public class FrmBoasVindas extends JFrame {
         btnCadastrar = new RFButton("Cadastrar-se");
         pnlCabecalho = new JPanel(new GridBagLayout());
         pnlCenter = new JPanel();
-        darkred = Color.decode("#9b1b30");
-        verydarkgray = Color.decode("#20232a");
+        darkred = new Color(155,27,48);
+        verydarkgray = new Color(32,35,42);
         //fim da sessão
 
         //sessão dos setters
@@ -48,8 +62,8 @@ public class FrmBoasVindas extends JFrame {
         //fim da sessão
 
         //sessão da modificação de componentes
-        Font quicksandAtt = lblTitulo.getFont().deriveFont(Font.PLAIN,64);//24
-        lblTitulo.setFont(quicksandAtt);
+        lblTitulo.setFont(lexendExa);
+
         pnlCabecalho.setBackground(darkred);
         pnlCabecalho.setPreferredSize(new Dimension(640,150));
         //fim da sessão

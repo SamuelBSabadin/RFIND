@@ -10,14 +10,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.InputStream;
 import java.util.List;
 
 public class FrmCadastroFuncionario extends JFrame
 {
+    private InputStream fonteLexendExa;
+    private Font lexendExa;
+
     private Color verydarkgray;
     private Color darkred;
 
-    private Font quicksandatt;
+    //private Font quicksandatt;
 
     private JScrollPane pnlCenter;
     private JPanel pnlCabecalho;
@@ -52,6 +56,15 @@ public class FrmCadastroFuncionario extends JFrame
 
     public FrmCadastroFuncionario()
     {
+        try{
+            fonteLexendExa = FrmBoasVindas.class.getResourceAsStream("/Fonts/Lexend_Exa/static/LexendExa-Regular.ttf");
+            lexendExa = Font.createFont(Font.TRUETYPE_FONT, fonteLexendExa);
+            lexendExa = lexendExa.deriveFont(Font.PLAIN, 24);
+        }
+        catch(Exception e){
+
+        }
+
         empresaControl = new EmpresaControl();
         funcionarioControl = new FuncionarioControl();
         sessao = relembrarSessao();
@@ -61,7 +74,7 @@ public class FrmCadastroFuncionario extends JFrame
         verydarkgray = new Color(32,35,42);
         darkred = new Color(155,27,48);
 
-        lblTitulo = new RFLabel("Cadastrar Funcionário");
+        lblTitulo = new RFLabel("CADASTRAR FUNCIONÁRIO");
         lblCpf = new RFLabel("CPF do funcionário");
         lblNome = new RFLabel("Nome do funcionário");
         lblSobrenome = new RFLabel("Sobrenome do funcionário");
@@ -89,8 +102,8 @@ public class FrmCadastroFuncionario extends JFrame
         //fim da sessão
 
         //sessão da mudança de componentes
-        quicksandatt = lblTitulo.getFont().deriveFont(Font.PLAIN,40);
-        lblTitulo.setFont(quicksandatt);
+        //quicksandatt = lblTitulo.getFont().deriveFont(Font.PLAIN,40);
+        lblTitulo.setFont(lexendExa);
 
         pnlCabecalho.setPreferredSize(new Dimension(640,150));
         pnlCabecalho.setBackground(darkred);

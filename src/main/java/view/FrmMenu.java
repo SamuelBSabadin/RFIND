@@ -6,8 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.InputStream;
 
 public class FrmMenu extends JFrame {
+    private InputStream fonteLexendExa;
+    private Font lexendExa;
+
     private ImageIcon iconTable;
     private ImageIcon iconAddFunc;
     private ImageIcon iconConfig;
@@ -23,7 +27,7 @@ public class FrmMenu extends JFrame {
 
     private final Color darkred;
     private final Color verydarkgray;
-    private final JPanel pnlCabecalho;
+    //private final JPanel pnlCabecalho;
     private final JPanel pnlCabecalhoEsquerda;
     private final JPanel pnlCabecalhoDireita;
     private final JPanel pnlCenter;
@@ -33,16 +37,25 @@ public class FrmMenu extends JFrame {
     private final GridBagConstraints constraintsCabecalho;
     private final GridBagConstraints gridBagConstraints;
     public FrmMenu(){
+        try{
+            fonteLexendExa = FrmBoasVindas.class.getResourceAsStream("/Fonts/Lexend_Exa/static/LexendExa-Regular.ttf");
+            lexendExa = Font.createFont(Font.TRUETYPE_FONT, fonteLexendExa);
+            lexendExa = lexendExa.deriveFont(Font.PLAIN, 64);
+        }
+        catch(Exception e){
+
+        }
+
         //sessão dos componentes
         darkred = Color.decode("#9b1b30");//155,27,48
         verydarkgray = Color.decode("#20232a");//32,35,42
-        pnlCabecalho = new JPanel(new GridLayout(1,2));
+        //pnlCabecalho = new JPanel(new GridLayout(1,2));
         pnlCabecalhoEsquerda = new JPanel(new GridBagLayout());
         pnlCabecalhoDireita = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         pnlCenter = new JPanel(new GridBagLayout());
         insetsCabecalho = new Insets(90,10,90,10);
         insets = new Insets(360,60,360,60);
-        lblTitulo = new RFLabel("Menu Principal");
+        lblTitulo = new RFLabel("MENU PRINCIPAL");
         constraintsCabecalho = new GridBagConstraints();
         gridBagConstraints = new GridBagConstraints();
         //contentPane = new JPanel();
@@ -60,11 +73,11 @@ public class FrmMenu extends JFrame {
 
         //sessão da mudança de componentes
         pnlCabecalhoEsquerda.setBackground(darkred);
-        pnlCabecalhoDireita.setBackground(darkred);
-        pnlCabecalho.setPreferredSize(new Dimension(1280,180));
+        //pnlCabecalhoDireita.setBackground(darkred);
+        //pnlCabecalho.setPreferredSize(new Dimension(1280,180));
         pnlCenter.setBackground(verydarkgray);
-        Font quicksandatt = lblTitulo.getFont().deriveFont(Font.PLAIN,72);
-        lblTitulo.setFont(quicksandatt);
+        //Font quicksandatt = lblTitulo.getFont().deriveFont(Font.PLAIN,72);
+        lblTitulo.setFont(lexendExa);
         pnlConfig.setBackground(verydarkgray);
         pnlConsultar.setBackground(verydarkgray);
         pnlAddFunc.setBackground(verydarkgray);
@@ -110,10 +123,10 @@ public class FrmMenu extends JFrame {
         /*gridBagConstraints.gridx = 2;
         pnlCenter.add(pnlConfig,gridBagConstraints);*/
 
-        pnlCabecalho.add(pnlCabecalhoEsquerda);
-        pnlCabecalho.add(pnlCabecalhoDireita);
+        //pnlCabecalho.add(pnlCabecalhoEsquerda);
+        //pnlCabecalho.add(pnlCabecalhoDireita);
 
-        add(pnlCabecalho, BorderLayout.NORTH);
+        add(pnlCabecalhoEsquerda, BorderLayout.NORTH);
         add(pnlCenter,BorderLayout.CENTER);
         //fim da sessão
 

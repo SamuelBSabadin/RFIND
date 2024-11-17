@@ -19,7 +19,7 @@ public class Funcionario
     private String setor;
     @Column(nullable = false)
     private boolean ativado;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()//cascade = CascadeType.ALL
     @JoinColumn(name = "empresa_id", nullable = false)
     private Empresa empresa;
 

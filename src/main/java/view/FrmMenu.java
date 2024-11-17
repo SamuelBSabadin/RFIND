@@ -98,7 +98,7 @@ public class FrmMenu extends JFrame {
         pnlAddFunc.add(new RFLabel("Cadastrar funcionário"));
 
         pnlConsultar.add(btnConsultar);
-        pnlConsultar.add(new RFLabel("Consultar funcionários"));
+        pnlConsultar.add(new RFLabel("Gerenciar funcionários"));
 
         pnlConfig.add(btnConfig);
         pnlConfig.add(new RFLabel("Configurações"));
@@ -107,8 +107,8 @@ public class FrmMenu extends JFrame {
         pnlCenter.add(pnlAddFunc,gridBagConstraints);
         gridBagConstraints.gridx = 1;
         pnlCenter.add(pnlConsultar,gridBagConstraints);
-        gridBagConstraints.gridx = 2;
-        pnlCenter.add(pnlConfig,gridBagConstraints);
+        /*gridBagConstraints.gridx = 2;
+        pnlCenter.add(pnlConfig,gridBagConstraints);*/
 
         pnlCabecalho.add(pnlCabecalhoEsquerda);
         pnlCabecalho.add(pnlCabecalhoDireita);
@@ -155,6 +155,12 @@ public class FrmMenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e){
                 SwingUtilities.invokeLater(FrmCadastroFuncionario::new);
+            }
+        });
+        btnConsultar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(FrmGerenciamento::new);
             }
         });
         //fim da sessão

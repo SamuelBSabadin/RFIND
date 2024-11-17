@@ -104,6 +104,7 @@ public class FrmBoasVindas extends JFrame {
         setVisible(true);
     }
     public static void main(String[] args){
+        System.setProperty("awt.useSystemAAFontSettings","on");
         SwingUtilities.invokeLater(FrmBoasVindas::new);
     }
 }

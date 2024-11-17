@@ -250,7 +250,8 @@ public class FrmDesativados extends JFrame {
                 try{
                     strPesquisa = txtExcluir.getText();
                     txtExcluir.setText(null);
-                    funcionarioControl.deleteById(Integer.parseInt(strPesquisa));
+                    funcionarioControl.deleteByIdEmpresa(empresa1,Integer.parseInt(strPesquisa));
+                    //funcionarioControl.deleteById(Integer.parseInt(strPesquisa));
                     RFMessageDialog.showMessageDialog(null,"Funcionário excluído com sucesso","Aviso do sistema");
                     frmPromptExcluir.dispose();
                     atualizaTabela();

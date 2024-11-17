@@ -112,4 +112,25 @@ public class FuncionarioDAO {
         entityManager.getTransaction().commit();
         entityManager.close();
     }
+    public void deleteByIdEmpresa(Empresa empresa, int id){
+        boolean funcionarioExiste = false;
+        for(Funcionario f : empresa.getFuncionarios()){
+            if(f.getId() == id){
+                funcionarioExiste = true;
+                break;
+            }
+        }
+        if(funcionarioExiste){
+            if(!entityManager.isOpen())
+                entityManager = entityManagerFactory.createEntityManager();
+            if(!entityManager.getTransaction().isActive())
+                entityManager.getTransaction().begin();
+            Funcionario funcionario = entityManager.find(Funcionario.class,id);
+            entityManager.remove(funcionario);
+            entityManager.getTransaction().commit();
+            entityManager.close();
+        }
+        else
+            throw new NullPointerException();
+    }
 }

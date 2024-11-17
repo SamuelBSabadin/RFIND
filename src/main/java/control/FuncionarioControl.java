@@ -1,5 +1,6 @@
 package control;
 
+import model.Empresa;
 import model.Funcionario;
 import model.DAO.FuncionarioDAO;
 
@@ -24,5 +25,8 @@ public class FuncionarioControl {
     }
     public void ativaFuncionario(int id){
         funcionarioDAO.ativaFuncionario(id);
+    }
+    public void deleteByIdEmpresa(Empresa empresa, int id){
+        funcionarioDAO.deleteByIdEmpresa(empresa,id);
     }
 }

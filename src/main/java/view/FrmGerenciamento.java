@@ -206,6 +206,18 @@ public class FrmGerenciamento extends JFrame {
         tblFuncionarios.setModel(dados);
         pnlCenter.setViewportView(tblFuncionarios);
     }
+
+    private void atualizaTabelaDesativar(){
+        Empresa empresa = empresaControl.findByCnpj(relembraSessao().getCnpj());
+        dados.setNumRows(0);
+        for(Funcionario funcionario : empresa.getFuncionarios()){
+            if(funcionario.getAtivado())
+                dados.addRow(new Object[]{funcionario.getId(),funcionario.getNome(),funcionario.getSobrenome(),funcionario.getSetor()});
+        }
+        tblFuncionarios.setModel(dados);
+        //pnlCenter.setViewportView(tblFuncionarios);
+    }
+
     private Sessao relembraSessao(){
         List<Sessao> sessao = Sessao.getSessao();
         Sessao s = sessao.getFirst();
@@ -263,10 +275,12 @@ public class FrmGerenciamento extends JFrame {
                     strPesquisa = txtDesativar.getText();
                     txtDesativar.setText(null);
                     funcionarioControl.desativaFuncionario(Integer.parseInt(strPesquisa));
+                    RFMessageDialog.showMessageDialog(null,"Funcionário desativado","Aviso do sistema");
                     frmPromptDesativar.dispose();
+                    atualizaTabelaDesativar();
                 }
                 catch(Exception ex){
-                    JOptionPane.showMessageDialog(null,ex.getMessage());
+                    RFMessageDialog.showMessageDialog(null,"Funcionário não encontrado","Erro");
                 }
             }
         });

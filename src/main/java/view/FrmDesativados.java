@@ -182,6 +182,16 @@ public class FrmDesativados extends JFrame {
         return s;
     }
 
+    private void atualizaTabela(){
+        Empresa empresa = empresaControl.findByCnpj(relembraSessao().getCnpj());
+        dados.setNumRows(0);
+        for(Funcionario funcionario : selectAllDestivados()){
+            dados.addRow(new Object[]{funcionario.getId(),funcionario.getNome(),funcionario.getSobrenome(),funcionario.getSetor()});
+        }
+        tblFuncDes.setModel(dados);
+        //pnlCenter.setViewportView(tblFuncDes);
+    }
+
     private void criaFrmPromptReativacao(){
         frmPromptAtivar = new JFrame();
         frmPromptAtivar.setTitle("Digite o ID do funcionário");
@@ -206,10 +216,12 @@ public class FrmDesativados extends JFrame {
                     strPesquisa = txtReativar.getText();
                     txtReativar.setText(null);
                     funcionarioControl.ativaFuncionario(Integer.parseInt(strPesquisa));
+                    RFMessageDialog.showMessageDialog(null,"Funcionário reativado com sucesso","Aviso do sistema");
                     frmPromptAtivar.dispose();
+                    atualizaTabela();
                 }
                 catch(Exception ex){
-                    JOptionPane.showMessageDialog(null,ex.getMessage());
+                    RFMessageDialog.showMessageDialog(null,"Funcionário não encontrado","Erro");
                 }
             }
         });
@@ -238,13 +250,16 @@ public class FrmDesativados extends JFrame {
                 try{
                     strPesquisa = txtExcluir.getText();
                     txtExcluir.setText(null);
-                    Funcionario funcionario = funcionarioControl.findById(empresa1,Integer.parseInt(strPesquisa));
-                    funcionario = funcionarioControl.getEntityManager().merge(funcionario);
-                    funcionarioControl.delete(funcionario);
+                    funcionarioControl.deleteById(Integer.parseInt(strPesquisa));
+                    RFMessageDialog.showMessageDialog(null,"Funcionário excluído com sucesso","Aviso do sistema");
                     frmPromptExcluir.dispose();
+                    atualizaTabela();
                 }
-                catch(Exception ex){
-                    JOptionPane.showMessageDialog(null,ex.getMessage());
+                catch(NullPointerException ex){//Exception ex
+                    RFMessageDialog.showMessageDialog(null,"Digite o ID correto","Erro");
+                }
+                catch(IllegalArgumentException ex){
+                    RFMessageDialog.showMessageDialog(null,"O funcionário está ativado","Erro");
                 }
             }
         });

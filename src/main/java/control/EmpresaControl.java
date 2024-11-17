@@ -1,50 +1,25 @@
 package control;
 
 import model.Empresa;
-import jakarta.persistence.*;
-
+import model.DAO.EmpresaDAO;
 import java.util.List;
 
 public class EmpresaControl {
-    private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("rfind-db");
-    private EntityManager entityManager;
+    private EmpresaDAO empresaDAO;
     public EmpresaControl()
     {
-        entityManager = entityManagerFactory.createEntityManager();
+        empresaDAO = new EmpresaDAO();
     }
     public void insert(Empresa empresa){
-        if(!entityManager.isOpen())
-            entityManager = entityManagerFactory.createEntityManager();
-
-        entityManager.getTransaction().begin();
-        entityManager.persist(empresa);
-        entityManager.getTransaction().commit();
-        entityManager.close();
+        empresaDAO.insert(empresa);
     }
-    public List<Empresa> select()
-    {
-        if(!entityManager.isOpen())
-            entityManager = entityManagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
-        List<Empresa> listEmpresas = entityManager.createQuery("select e from Empresa e",Empresa.class).getResultList();
-        entityManager.getTransaction().commit();
-        entityManager.close();
-        return listEmpresas;
+    public List<Empresa> select(){
+        return empresaDAO.select();
     }
     public Empresa findByCnpj(String cnpj){
-        if(!entityManager.isOpen())
-            entityManager = entityManagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
-        Empresa empresa = entityManager.createQuery("select e from Empresa e where e.cnpj like :cnpj",Empresa.class).setParameter("cnpj",cnpj).getSingleResult();
-        entityManager.close();
-        return empresa;
+        return empresaDAO.findByCnpj(cnpj);
     }
-    public void deleteById(int id)
-    {
-        if(!entityManager.isOpen())
-            entityManager = entityManagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.createQuery("delete from Empresa e where e.id = :id").setParameter("id",id).executeUpdate();
-        entityManager.close();
+    public void deleteById(int id){
+        empresaDAO.deleteById(id);
     }
 }
